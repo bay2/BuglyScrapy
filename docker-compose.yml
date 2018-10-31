@@ -4,18 +4,45 @@ services:
 
   mongo:
     image: mongo
+    container_name: mongodb_mongo
     restart: always
     ports:
       - 27017:27017
+    volumes:
+      - ~/mongodb:/etc/mongo
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: Cbay1988
 
   mongo-express:
     image: mongo-express
+    container_name: mongodb_mongo-express
     restart: always
     ports:
       - 8081:8081
     environment:
       ME_CONFIG_MONGODB_ADMINUSERNAME: root
       ME_CONFIG_MONGODB_ADMINPASSWORD: Cbay1988
+
+  scrapyd:
+    image: registry.cn-shenzhen.aliyuncs.com/sim_cat/scrapyd
+    container_name: scrapyd
+    restart: always
+    volumes:
+      - /Users/sim/code/BuglyChat/BuglyScrapy:/code
+    ports:
+      - 6800:6800
+  
+  spiderkeeper:
+    image: registry.cn-shenzhen.aliyuncs.com/sim_cat/spiderkeeper
+    container_name: spiderkeeper
+    restart: always
+    ports:
+      - 5000:5000
+    environment:
+      SERVER: http://172.29.58.67:6800
+      TZ: Asia/Tokyo
+    volumes:
+      - ~/spiderkeeper:/db
+    depends_on:
+      - scrapyd

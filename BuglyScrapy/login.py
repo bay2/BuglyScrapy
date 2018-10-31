@@ -11,7 +11,11 @@ class BuglyLogin(object):
     def __init__(self):
         caps = DesiredCapabilities.CHROME
         caps['loggingPrefs'] = {'performance': 'ALL'}
-        self.driver = webdriver.Chrome(desired_capabilities=caps)
+        chrome_options = webdriver.ChromeOptions()
+        chrome_options.add_argument('--no-sandbox')
+        chrome_options.add_argument('--headless')
+        chrome_options.add_argument('--disable-gpu')
+        self.driver = webdriver.Chrome(desired_capabilities=caps, chrome_options=chrome_options)
         self.driver.implicitly_wait(10)
         
         pass
@@ -23,10 +27,17 @@ class BuglyLogin(object):
         self.driver.switch_to_frame("ptlogin_iframe")
         self.driver.find_element_by_link_text("帐号密码登录").click()
 
+        # print(self.driver.page_source)
+
+        # print('wait 30s')
+        # time.sleep(30)
+
+        print(self.driver.page_source)
+
         self.driver.find_element_by_id("u").send_keys(userName)
         self.driver.find_element_by_id("p").send_keys(passWord)
         self.driver.find_element_by_id("login_button").click()
-
+        
         pass
 
     def get_cookies(self):

@@ -7,7 +7,7 @@ from ..stringTool import StringTool
 from scrapy.loader import ItemLoader
 from ..items import BuglyscrapyIssueItem
 from ..mongodbTool import mongodb
-from scrapy.conf import settings
+from .. import settings
 import pymongo
 
 class BuglySpider(scrapy.Spider):
@@ -17,7 +17,7 @@ class BuglySpider(scrapy.Spider):
 
     def start_requests(self):
         bugly = BuglyLogin()
-        bugly.login(settings['BUGLY_USERNAME'], settings['BUGLY_PASSWORD'])
+        bugly.login(settings.BUGLY_USERNAME, settings.BUGLY_PASSWORD)
 
         self.header = bugly.get_header('https://bugly.qq.com/v2/users/null/appList')
         self.cookies = bugly.get_cookies()
@@ -29,7 +29,7 @@ class BuglySpider(scrapy.Spider):
             pass
 
 
-        return [scrapy.Request("https://bugly.qq.com/v2/users/null/appList?" + "userId=" + settings['BUGLY_USERNAME'], 
+        return [scrapy.Request("https://bugly.qq.com/v2/users/null/appList?" + "userId=" + settings.BUGLY_USERNAME, 
         callback=self.appListParse,
         headers=self.header,
         cookies=self.cookies)]
@@ -131,6 +131,6 @@ class BuglySpider(scrapy.Spider):
 
     def appListParse(self, response):
         for appInfo in json.loads(response.text)['ret']:
-            if appInfo["appName"] == settings['BUGLY_APPNAME']:
+            if appInfo["appName"] == settings.BUGLY_APPNAME:
                 yield self.start_requestIssueList(appInfo["appId"], "-1001")
         pass
