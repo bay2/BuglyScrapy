@@ -20,7 +20,7 @@ class BuglyNetworkStats(Resource):
         aggregate =  [
             {"$group": {"_id": "$api", "count": {"$sum": 1}}},
             {"$sort": {"count": -1}}
-         ]
+        ]
 
         if count is not None:
             aggregate.append({'$limit': count})

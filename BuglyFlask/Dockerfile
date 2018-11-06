@@ -4,14 +4,11 @@ RUN mkdir -p /usr/src/app  && \
     mkdir -p /var/log/gunicorn && \
     mkdir -p /usr/src/code
 
-VOLUME /usr/src/app
-
 WORKDIR /usr/src/app
 
-ADD . /usr/src/app
+COPY . /usr/src/app
 
 RUN pip install --no-cache-dir -r /usr/src/app/requirements.txt
-
 
 ENV PROJECT manage
 

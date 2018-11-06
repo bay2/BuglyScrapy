@@ -32,7 +32,7 @@ class BuglyLogin(object):
         # print('wait 30s')
         # time.sleep(30)
 
-        print(self.driver.page_source)
+        # print(self.driver.page_source)
 
         self.driver.find_element_by_id("u").send_keys(userName)
         self.driver.find_element_by_id("p").send_keys(passWord)

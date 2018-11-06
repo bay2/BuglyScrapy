@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import pymongo
-from scrapy.conf import settings
+from .. import settings
+import time
 
 
 class MongodbTool:
@@ -17,7 +18,14 @@ mongodb = MongodbTool()
 
 def main():
     # obj = mongodb.collection.find_one({"_id": "60:D3:BB:AC:40:16:88:4F:0F:54:32:0A:C4:D4:BC:8F"})
-    obj = mongodb.collection.aggregate([{"$group": {"_id": "$api", "count": {"$sum": 1}}}, {'maxCount': {'$max': '$group.$count'}}])
+    # obj = mongodb.collection.aggregate([{"$group": {"_id": "$api", "count": {"$sum": 1}}}, {'maxCount': {'$max': '$group.$count'}}])
+    collection = mongodb['User_Stat']
+
+    beginTime = time.strptime('2018110500', '%Y%m%d%H')
+    endTime = time.strptime('2018110523', '%Y%m%d%H')
+    obj = collection.find({
+        'date': {'$gte': beginTime, '$lt': endTime}
+    })
     apiErrorCountList = list(obj)
 
     # obj2 =  obj.aggregate([{"$max": "count"}])

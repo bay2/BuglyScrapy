@@ -5,6 +5,7 @@ from flask_cors import CORS, cross_origin
 import json
 from BuglyNetworkStats import BuglyNetworkStats
 from BuglyNetworkDayTimeStats import BuglyNetworkDayTimeStats
+from BuglyUserStats import BuglyUserStats
 
 app = Flask(__name__)
 CORS(app, support_credentials=True)
@@ -12,6 +13,7 @@ api = Api(app, default_mediatype='application/json')
 
 api.add_resource(BuglyNetworkStats, '/networkErrorSum')
 api.add_resource(BuglyNetworkDayTimeStats, '/daytimestats')
+api.add_resource(BuglyUserStats, '/getRealTimeHourlyStat')
 
 if __name__ == '__main__':
     app.run(debug=True)

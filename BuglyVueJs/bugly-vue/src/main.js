@@ -12,7 +12,6 @@ Vue.prototype.$http = axios
 
 Vue.prototype.$http.emulateJSON = true
 
-axios
 
 Vue.use(VCharts)
 

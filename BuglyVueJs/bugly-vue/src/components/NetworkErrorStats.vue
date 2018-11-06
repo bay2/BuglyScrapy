@@ -28,8 +28,11 @@
       }
     },
     mounted () {
+      // eslint-disable-next-line
+      console.log(process.env.VUE_APP_ROOT_API)
       axios
-      .get('http://localhost:5000/networkErrorSum', {params: {count: 10}})
+      // eslint-disable-next-line
+      .get(process.env.VUE_APP_ROOT_API + '/networkErrorSum', {params: {count: 10}})
       .then(response => (this.chartData.rows = response.data['data']))
     }
   }

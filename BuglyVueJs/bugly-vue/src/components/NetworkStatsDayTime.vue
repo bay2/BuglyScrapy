@@ -12,19 +12,21 @@ export default {
         left: '0'
     },
     this.chartSettings = {
-        metrics: ['count'],
+        metrics: ['count', 'accessUser'],
         legendName: {
-            'count': '接口超时次数'
+            'count': '接口超时次数',
+            'accessUser': '联网用户数'
         },
         labelMap: {
           'count': '接口超时次数',
-          'hour': '小时'
+          'hour': '小时',
+          'accessUser': '联网用户数'
         },
         dimension: ['hour']
     }
     return {
         chartData: {
-          columns: ['hour', 'count'],
+          columns: ['hour', 'count', 'accessUser'],
           rows: [
           ]
         }
@@ -32,7 +34,8 @@ export default {
     },
     mounted () {
       axios
-      .get('http://localhost:5000/daytimestats')
+      // eslint-disable-next-line
+      .get(process.env.VUE_APP_ROOT_API + '/daytimestats')
       .then(response => (this.chartData.rows = response.data['data']))
     }
 }

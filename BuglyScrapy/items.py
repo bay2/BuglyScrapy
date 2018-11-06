@@ -31,7 +31,11 @@ class BuglyscrapyIssueItem(scrapy.Item):
     operator = scrapy.Field()
     reachabilityStatus = scrapy.Field()
 
+    pass
 
+class BuglyscrapyUserSumItem(scrapy.Item):
+    accessUser = scrapy.Field(serializer=int)
+    date = scrapy.Field(serializer=str)
 
 
     pass

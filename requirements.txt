@@ -14,3 +14,4 @@ scrapyd-client
 scrapy-redis
 scrapy-splash
 pytest
+chromedriver
